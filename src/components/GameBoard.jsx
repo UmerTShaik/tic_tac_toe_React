@@ -1,14 +1,11 @@
-import { useState } from "react"
 
-const initalGamerBoard = [
-    [null,null,null],
-    [null,null,null],
-    [null,null,null]
-]
 
-export default function GameBoard({onSelectSquare, activePlayerSymbol}) {
-    const [gameBoard, setGameBoard] = useState(initalGamerBoard);
 
+export default function GameBoard({onSelectSquare , board}) {
+
+    
+    //const [gameBoard, setGameBoard] = useState(initalGamerBoard);
+    //83.Commented below to lift state up as this is not sufficeint for Log component as this doesbnt track who click first and on
     // function handleSelectSquare(rowIndex, colIndex){//82.adding onSelectSquare here as this is triggered wehen user selects it
     //     setGameBoard((prevGameBoard)=> {
     //         const updatedBoard = [...prevGameBoard.map(innerArray =>[...innerArray])]//created brand new array to avaoid below scheduleing issue
@@ -22,12 +19,14 @@ export default function GameBoard({onSelectSquare, activePlayerSymbol}) {
     // }
 
     return <ol id="game-board">
-        {gameBoard.map((row, rowIndex)=> 
+        {board.map((row, rowIndex)=> 
         <li key={rowIndex}>
             <ol>
                 {row.map((playerSymbol, colIndex) => 
                 <li key={colIndex}>
-                    <button onClick={()=>handleSelectSquare(rowIndex, colIndex)}>{playerSymbol}</button>
+                    <button onClick={ () => onSelectSquare(rowIndex,colIndex) } 
+                    disabled={playerSymbol !== null}>{playerSymbol}</button> 
+                    {/* //84.removed anonymous function to lift the state up */}
                 </li>
                 )}
             </ol>

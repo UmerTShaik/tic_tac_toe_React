@@ -2,13 +2,17 @@ import { useState } from "react"
 
 
 
-export default function Player({initialName , symbol, isActive}){//82.added active to know whihc player is active
+export default function Player({initialName , symbol, isActive, onChangeName}){//82.added active to know whihc player is active
     const [playerName, setPlayerName] = useState(initialName);
     const [isEditing, setIsEditing] = useState(false);
 
     function handleEditClick(buttonPressed){
         //setIsEditing(!isEditing);//Do not do like this as per React Team.
         setIsEditing((editing) => !editing);//pass a fucntion whcih gets current state and uses it to update th updater functoin
+        if(isEditing){
+            onChangeName(symbol , playerName);//94.
+        }
+        
     }
 
     function handleChange(event){
